@@ -1,0 +1,34 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[scripts]
+get-micropython = "curl --create-dirs -L -o micropython/${ESP_MICROPYTHON}.bin https://micropython.org/resources/firmware/${ESP_MICROPYTHON}.bin"
+erase-flash = "esptool.py --chip esp32-s3 erase_flash"
+
+flash-micropython = "esptool.py --chip esp32 write_flash -z 0x1000 micropython/${ESP_MICROPYTHON}.bin"
+
+flash-s3 = "esptool.py --chip esp32-s3 write_flash -z 0x0 micropython/${ESP_MICROPYTHON}.bin"
+
+info-s3 = "esptool.py --chip esp32-s3 get_security_info"
+
+build = "./build.sh"
+repl = "rshell repl"
+sync-code = "./build.sh -d"
+bumpminor = "bump2version minor --verbose --dry-run"
+bumpmajor = "bump2version major --verbose --dry-run"
+
+[packages]
+esptool = "*"
+rshell = "*"
+pyyaml = "*"
+pylint = "*"
+paho-mqtt = "*"
+bump2version = "*"
+adafruit-ampy = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
